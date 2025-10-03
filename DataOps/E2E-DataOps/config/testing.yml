@@ -1,0 +1,21 @@
+# config/testing.yml
+database:
+  host: localhost
+  port: 5432
+  name: ecommerce_analytics_test
+  user: postgres
+  password: postgres
+  
+ingestion:
+  batch_size: 10
+  validation_strict: true
+  max_retries: 1
+  
+processing:
+  window_size_minutes: 1
+  aggregation_interval: 10
+  
+monitoring:
+  enable_metrics: false
+  log_level: INFO
+  health_check_interval: 10

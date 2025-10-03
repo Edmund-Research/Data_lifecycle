@@ -1,0 +1,109 @@
+{
+    "expectation_suite_name": "raw_events_suite",
+    "expectations": [
+        {
+            "expectation_type": "expect_column_to_exist",
+            "kwargs": {
+                "column": "event_id"
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_not_be_null",
+            "kwargs": {
+                "column": "event_id"
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_be_unique",
+            "kwargs": {
+                "column": "event_id"
+            }
+        },
+        {
+            "expectation_type": "expect_column_to_exist",
+            "kwargs": {
+                "column": "timestamp"
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_not_be_null",
+            "kwargs": {
+                "column": "timestamp"
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_be_in_set",
+            "kwargs": {
+                "column": "event_type",
+                "value_set": [
+                    "page_view",
+                    "click",
+                    "add_to_cart",
+                    "purchase",
+                    "search",
+                    "login",
+                    "logout"
+                ]
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_be_between",
+            "kwargs": {
+                "column": "total_events",
+                "min_value": 0,
+                "max_value": 1000000
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_be_between",
+            "kwargs": {
+                "column": "unique_users",
+                "min_value": 0,
+                "max_value": 100000
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_be_between",
+            "kwargs": {
+                "column": "total_revenue",
+                "min_value": 0,
+                "max_value": 10000000
+            }
+        },
+        {
+            "expectation_type": "expect_column_values_to_be_between",
+            "kwargs": {
+                "column": "avg_session_duration",
+                "min_value": 0,
+                "max_value": 86400
+            }
+        },
+        {
+            "expectation_type": "expect_column_pair_values_A_to_be_greater_than_B",
+            "kwargs": {
+                "column_A": "total_events",
+                "column_B": "purchases",
+                "or_equal": true
+            }
+        },
+        {
+            "expectation_type": "expect_column_pair_values_A_to_be_greater_than_B",
+            "kwargs": {
+                "column_A": "total_events",
+                "column_B": "unique_users",
+                "or_equal": true
+            }
+        }
+    ],
+    "meta": {
+        "great_expectations_version": "0.18.6",
+        "created_by": "dataops_pipeline",
+        "created_at": "2024-01-15T00:00:00Z",
+        "notes": "Expectations for hourly aggregated metrics"
+    },
+    "price": {
+        "min_value": 0,
+        "max_value": 100000,
+        "mostly": 0.99
+    }
+}

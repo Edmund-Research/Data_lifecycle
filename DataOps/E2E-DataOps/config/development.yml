@@ -1,0 +1,21 @@
+# config/development.yml
+database:
+  host: localhost
+  port: 5432
+  name: ecommerce_analytics_dev
+  user: postgres
+  password: postgres
+  
+ingestion:
+  batch_size: 100
+  validation_strict: true
+  max_retries: 3
+  
+processing:
+  window_size_minutes: 5
+  aggregation_interval: 60
+  
+monitoring:
+  enable_metrics: true
+  log_level: DEBUG
+  health_check_interval: 30

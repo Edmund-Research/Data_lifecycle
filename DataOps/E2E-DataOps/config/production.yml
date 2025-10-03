@@ -1,0 +1,21 @@
+# config/production.yml
+database:
+  host: "${DB_HOST}"
+  port: "${DB_PORT}"
+  name: "${DB_NAME}"
+  user: "${DB_USER}"
+  password: "${DB_PASSWORD}"
+  
+ingestion:
+  batch_size: 1000
+  validation_strict: true
+  max_retries: 5
+  
+processing:
+  window_size_minutes: 15
+  aggregation_interval: 300
+  
+monitoring:
+  enable_metrics: true
+  log_level: INFO
+  health_check_interval: 60
