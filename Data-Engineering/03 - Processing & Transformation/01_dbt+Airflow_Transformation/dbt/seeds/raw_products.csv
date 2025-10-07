@@ -1,0 +1,11 @@
+product_id,product_name,category,unit_price,cost,supplier
+101,Laptop Pro,Electronics,1200.00,800.00,TechCorp
+102,Wireless Mouse,Electronics,25.00,10.00,TechCorp
+103,USB-C Cable,Electronics,15.00,5.00,CableSupply
+104,Office Chair,Furniture,350.00,200.00,ComfortSeating
+105,Desk Lamp,Furniture,45.00,20.00,LightWorks
+106,Notebook Set,Stationery,12.00,4.00,PaperPlus
+107,Mechanical Keyboard,Electronics,150.00,80.00,TechCorp
+108,Monitor 27inch,Electronics,400.00,250.00,DisplayPro
+109,Standing Desk,Furniture,600.00,350.00,ComfortSeating
+110,Webcam HD,Electronics,80.00,40.00,TechCorp

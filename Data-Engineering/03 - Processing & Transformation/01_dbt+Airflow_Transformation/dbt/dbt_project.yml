@@ -1,0 +1,94 @@
+name: 'transformation_showcase'
+version: '1.0.0'
+config-version: 2
+
+profile: 'transformation_showcase'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Model configurations
+models:
+  transformation_showcase:
+    +materialized: view
+    +persist_docs:
+      relation: true
+      columns: true
+    
+    staging:
+      +materialized: view
+      +tags: ["staging"]
+      +meta:
+        owner: "data_engineering"
+        refresh_frequency: "hourly"
+    
+    intermediate:
+      +materialized: ephemeral
+      +tags: ["intermediate"]
+    
+    marts:
+      +materialized: table
+      +tags: ["marts"]
+      +meta:
+        owner: "analytics"
+        refresh_frequency: "daily"
+      
+      metrics:
+        +materialized: incremental
+        +unique_key: "date_day"
+        +on_schema_change: "fail"
+        +tags: ["metrics", "incremental"]
+
+# Seed configurations
+seeds:
+  transformation_showcase:
+    +quote_columns: false
+    +delimiter: ","
+
+# Test configurations
+tests:
+  transformation_showcase:
+    +store_failures: true
+    +schema: dbt_test_failures
+
+# Snapshot configurations
+snapshots:
+  transformation_showcase:
+    +target_schema: snapshots
+    +unique_key: id
+    +strategy: timestamp
+    +updated_at: updated_at
+
+# Variables
+vars:
+  # Date range for incremental models
+  start_date: '2020-01-01'
+  
+  # Payment method mappings
+  payment_method_codes:
+    cc: 'credit_card'
+    db: 'debit_card'
+    pp: 'paypal'
+    bc: 'bitcoin'
+    
+  # Business logic parameters
+  high_value_customer_threshold: 10000
+  days_to_churn: 90
+  
+# Hooks
+on-run-start:
+  - "{{ log('Starting dbt run for transformation_showcase', info=True) }}"
+  - "CREATE SCHEMA IF NOT EXISTS {{ target.schema }}_audit"
+
+on-run-end:
+  - "{{ log('Completed dbt run for transformation_showcase', info=True) }}"
+  - "{{ audit_table_creation() }}"

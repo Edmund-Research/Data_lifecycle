@@ -1,0 +1,16 @@
+order_id,customer_id,order_date,order_status,payment_method,order_total,shipping_cost
+1001,1,2020-02-01,completed,cc,150.00,10.00
+1002,1,2020-03-15,completed,cc,280.50,15.00
+1003,2,2020-03-20,completed,pp,95.00,8.00
+1004,3,2020-04-10,completed,cc,450.00,20.00
+1005,1,2020-05-05,cancelled,cc,200.00,12.00
+1006,4,2020-05-18,completed,db,180.00,10.00
+1007,5,2020-06-20,completed,cc,1200.00,0.00
+1008,2,2020-07-12,completed,pp,310.00,15.00
+1009,6,2020-08-05,shipped,cc,220.00,12.00
+1010,3,2020-08-22,completed,cc,380.00,18.00
+1011,7,2020-09-10,completed,cc,520.00,25.00
+1012,1,2020-10-15,completed,cc,340.00,15.00
+1013,8,2020-11-02,returned,pp,150.00,10.00
+1014,9,2020-11-20,completed,cc,2500.00,0.00
+1015,10,2020-12-15,completed,cc,680.00,30.00

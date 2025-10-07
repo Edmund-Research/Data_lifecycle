@@ -1,0 +1,89 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned and standardized customer data from raw source"
+    meta:
+      owner: "data_engineering"
+      contains_pii: true
+    columns:
+      - name: customer_id
+        description: "Unique identifier for each customer"
+        tests:
+          - unique
+          - not_null
+      
+      - name: email
+        description: "Customer email address"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"
+      
+      - name: signup_date
+        description: "Date when customer signed up"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: "'2020-01-01'"
+              max_value: "current_date"
+      
+      - name: customer_segment
+        description: "Customer segment classification"
+        tests:
+          - accepted_values:
+              values: ['standard', 'premium', 'enterprise']
+
+  - name: stg_orders
+    description: "Cleaned and standardized order data"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "Foreign key to customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      
+      - name: order_total
+        description: "Total order amount including shipping"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1000000
+      
+      - name: order_status
+        description: "Current status of the order"
+        tests:
+          - accepted_values:
+              values: ['completed', 'cancelled', 'shipped', 'returned', 'pending']
+
+  - name: stg_products
+    description: "Cleaned product catalog data"
+    columns:
+      - name: product_id
+        description: "Unique identifier for each product"
+        tests:
+          - unique
+          - not_null
+      
+      - name: unit_price
+        description: "Selling price per unit"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+      
+      - name: profit_margin_percentage
+        description: "Profit margin as percentage"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100

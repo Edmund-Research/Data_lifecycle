@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,email,signup_date,country,customer_segment
+1,John,Doe,john.doe@email.com,2020-01-15,USA,premium
+2,Jane,Smith,jane.smith@email.com,2020-02-20,UK,standard
+3,Bob,Johnson,bob.j@email.com,2020-03-10,USA,premium
+4,Alice,Williams,alice.w@email.com,2020-04-05,Canada,standard
+5,Charlie,Brown,charlie.b@email.com,2020-05-12,USA,enterprise
+6,Diana,Garcia,diana.g@email.com,2020-06-18,Mexico,standard
+7,Edward,Martinez,edward.m@email.com,2020-07-22,USA,premium
+8,Fiona,Rodriguez,fiona.r@email.com,2020-08-30,Spain,standard
+9,George,Wilson,george.w@email.com,2020-09-14,UK,enterprise
+10,Helen,Anderson,helen.a@email.com,2020-10-25,USA,premium
