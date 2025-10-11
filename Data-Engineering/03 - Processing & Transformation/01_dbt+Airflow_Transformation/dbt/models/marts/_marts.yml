@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table with full customer attributes and metrics"
+    meta:
+      owner: "analytics_team"
+      contains_pii: true
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - customer_id
+    columns:
+      - name: customer_key
+        description: "Surrogate key for customer dimension"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "Natural key - customer identifier"
+        tests:
+          - unique
+          - not_null
+      
+      - name: lifetime_value
+        description: "Total revenue from customer"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: fct_orders
+    description: "Order fact table with all order details and metrics"
+    meta:
+      owner: "analytics_team"
+    columns:
+      - name: order_key
+        description: "Surrogate key for order fact"
+        tests:
+          - unique
+          - not_null
+      
+      - name: order_id
+        description: "Natural key - order identifier"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_key
+        description: "Foreign key to dim_customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_key
+      
+      - name: order_total
+        description: "Total order amount"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: customer_lifetime_value
+    description: "Incremental model tracking customer LTV metrics"
+    meta:
+      owner: "analytics_team"
+    columns:
+      - name: customer_id
+        description: "Customer identifier"
+        tests:
+          - unique
+          - not_null
+      
+      - name: total_revenue
+        description: "Cumulative revenue from customer"
+        tests:
+          - not_null
+
+  - name: daily_revenue
+    description: "Incremental daily revenue aggregations"
+    meta:
+      owner: "analytics_team"
+    columns:
+      - name: date_day
+        description: "Date of the metrics"
+        tests:
+          - unique
+          - not_null
+      
+      - name: total_revenue
+        description: "Total revenue for the day"
+        tests:
+          - not_null
